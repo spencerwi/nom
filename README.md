@@ -9,12 +9,12 @@ nom is a filter-based file renaming tool.
 Usage
 -----
 
-nom [options] --filters=FILTERS <filenames>...
+    nom [options] --filters=FILTERS <filenames>...
 
-Options:
-    -h  --help      Show this screen
-    -v  --verbose   Verbose output
-        --dry-run   Don't actually move files; just list moves that would happen.
+    Options:
+        -h  --help      Show this screen
+        -v  --verbose   Verbose output
+            --dry-run   Don't actually move files; just list moves that would happen.
 
 
 Built-in Filters
