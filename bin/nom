@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'rubygems'
+require 'docopt'
+require 'nom/filters'
+
+docstring=<<DOCOPT
+nom file renamer.
+
+Usage:
+    nom [options] --filters=FILTERS <filenames>...
+
+Options:
+    -h  --help      Show this screen
+    -v  --verbose   Verbose output
+        --dry-run   Don't actually move files; just say what moves would happen.
+DOCOPT
+
+
+# Main function
+
+begin
+    opts = Docopt::docopt docstring
+rescue Docopt::Exit => e
+    puts e.message
+    exit 1
+end
+
+verbose = opts['-v']
+
+# Weed out files that don't exist. If no real files were given, exit.
+filenames = opts['<filenames>'].select { |filename| File.exists? filename }
+if filenames.length == 0
+    puts "No real files specified."
+    exit 1
+end
+
+# Convert the comma-separated list of filters to a list of functions, 
+# filtering out the ones that are not defined.
+filters = opts['--filters'].split ','
+filters = filters.select { |filtername| Filters.respond_to?(filtername) }
+
+# Actually perform the filters and do the moves.
+filenames.each do |filename|
+    basename = File.basename filename
+    dirname = File.dirname filename
+    filters.each do |filter|
+        basename = (Filters.send filter, basename)
+    end
+    dest_filename = File.join dirname, basename
+    puts "Move \"#{filename}\" to \"#{dest_filename}\"." if verbose
+    if not opts['--dry-run']
+        begin
+            FileUtils.mv filename, dest_filename
+        rescue StandardError => e
+            puts "Error moving \"#{filename}\" to \"#{dest_filename}\": #{e}"
+        end
+    end
+end
