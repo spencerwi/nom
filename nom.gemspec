@@ -9,5 +9,6 @@ Gem::Specification.new do |s|
     s.files       = ["lib/nom/filters.rb"]
     s.executables << 'nom'
     s.homepage    = 'http://github.com/spencerwi/nom'
+    s.add_dependency 'docopt'
     s.add_development_dependency 'rspec'
 end
