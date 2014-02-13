@@ -1,6 +1,8 @@
 nom 
 ===
 
+[![Build Status](https://travis-ci.org/spencerwi/nom.png?branch=master)](https://travis-ci.org/spencerwi/nom)
+
 Overview
 --------
 
