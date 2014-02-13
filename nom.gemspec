@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
     s.description = 'nom is a filter-based file-renaming tool.'
     s.authors     = ["Spencer Williams"]
     s.email       = 'spencerwi@gmail.com'
-    s.files       = ["lib/nom/filters.rb"]
     s.executables << 'nom'
     s.homepage    = 'http://github.com/spencerwi/nom'
     s.add_dependency 'docopt'
